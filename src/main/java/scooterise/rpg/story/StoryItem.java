@@ -1,4 +1,4 @@
-package scooterise.rpg;
+package scooterise.rpg.story;
 
 public class StoryItem{
     private String story;
