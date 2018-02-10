@@ -6,15 +6,20 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Creature {
 	public class Dice{
+		
+		
+		
+		
 		public Integer attackRoll(String diceString,Integer abilityscore){
 			char[] string = diceString.toCharArray();
 			Integer DiceCount = 1;
 			Boolean multiplierfin = false;
-			Integer dice = 4;
-			Integer Multiplierfinnumber = 1;
-			Integer doingmodifier = 0;
-			Integer modifiers = 0;
-			Integer modifer = 0;
+			int dice = 4;
+			int Multiplierfinnumber = 1;
+			int doingmodifier = 0;
+			int modifiers = 0;
+			int modifer = 0;
+			
 			for(int i=0;i<=string.length;i++) {
 				switch(i) {
 				case 0:
@@ -45,7 +50,7 @@ public class Creature {
 						DiceCount = (DiceCount *10)+((int)string[i]);
 					}if(1==1){
 						
-					}else if(multiplierfin==true){
+					}if(multiplierfin==true){
 						if((i-Multiplierfinnumber)==1) {
 						dice = ((int) string[i]);
 						}else if((i-Multiplierfinnumber)>1&&string[i]!='+'&&string[i]!='-') {
@@ -66,7 +71,7 @@ public class Creature {
 						DiceCount = (DiceCount *10)+((int)string[i]);
 					}if(1==1){
 						
-					}else if(multiplierfin==true){
+					} if(multiplierfin==true){
 						if((i-Multiplierfinnumber)==1) {
 						dice = ((int) string[i]);
 						}else if((i-Multiplierfinnumber)>1&&string[i]!='+'&&string[i]!='-') {
@@ -110,7 +115,7 @@ public class Creature {
 							DiceCount = (DiceCount *10)+((int)string[i]);
 						}if(1==1){
 							
-						}else if(multiplierfin==true){
+						}if(multiplierfin==true){
 							if((i-Multiplierfinnumber)==1) {
 							dice = ((int) string[i]);
 							}else if((i-Multiplierfinnumber)>1&&string[i]!='+'&&string[i]!='-') {
