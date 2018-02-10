@@ -1,5 +1,5 @@
-package scooterise.rpg;
-import scooterise.rpg.StoryItem;
+package scooterise.rpg.story;
+
 public class Choice extends StoryItem{
     public String question;
     public Choice(String Question){
