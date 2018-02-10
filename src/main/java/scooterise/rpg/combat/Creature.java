@@ -10,7 +10,7 @@ public class Creature {
    }
    public void notPlayer() {
 	   try {
-		throw new InvalidCharacter("Player Creature cannot be player");
+		throw new InvalidCharacter("Player Creature cannot be player, Please choose another creature");
 	} catch (InvalidCharacter e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
