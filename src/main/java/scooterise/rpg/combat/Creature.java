@@ -151,9 +151,7 @@ public class Creature {
 				}
 				
 			}
-			switch(abilityscore) {
-			case 1:
-			}
+			getAbilityModifier(abilityscore);
 			return 0;
 		}
 	}
@@ -164,7 +162,13 @@ public class Creature {
    
    HashMap<String,Integer> abilities = new HashMap<String,Integer>();
    public Creature(){
-	   abilities.put("Dexterity", 12);
+	   abilities.put("Strength", 10);
+	   abilities.put("Dexterity", 10);
+	   abilities.put("Wisdom", 10);
+	   abilities.put("Perception", 10);
+	   abilities.put("Charisma", 10);
+	   
+	   
    }
    public void notPlayer() {
 	   try {
@@ -174,15 +178,26 @@ public class Creature {
 	}
    }
    public class InvalidAbility extends Exception{
-	   public InvalidAbility(String message) {
+	   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public InvalidAbility(String message) {
 		   super("InvalidAbility: "+message);
 	   }
    }
    public class InvalidCharacter extends Exception{
-       public InvalidCharacter(String Error){
+       /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public InvalidCharacter(String Error){
            super(Error);
        
        }}
+   //Get ability Modifier based on ability 
    public int getAbilityModifier(int Ability) {
 	   switch(Ability) {
 	   case 1:
@@ -226,25 +241,30 @@ public class Creature {
 	return (Integer) null;
 	   
    }
-       public boolean abilitycheck(String ability){
+   //Ability Check
+       public Integer abilitycheck(String ability){
     	  if(abilities.get(ability)==null) {
     		  try {
 				throw new InvalidAbility("Not proper ability");
 			} catch (InvalidAbility e) {
 				e.printStackTrace();
 			}
+    		  return null;
     	  }else {
     		  Random rand = null;
 
     		    // nextInt is normally exclusive of the top value,
     		    // so add 1 to make it inclusive
     		    int randomNum = (rand.nextInt((20 -0) + 1) + 0)+getAbilityModifier(abilities.get(ability));
+    		   
+    		    return randomNum;
     		    
     	  }
     	  
-		return canBePlayer;
+		
     	   
        }
+       
        
    }
    
