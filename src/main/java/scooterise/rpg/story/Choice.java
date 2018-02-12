@@ -2,9 +2,10 @@ package scooterise.rpg.story;
 
 public class Choice extends StoryItem{
     public String question;
-    public Choice(String Question){
+    public Choice(String Question,ChoiceItem... choiceItems){
          this.setInternalName("Choice");
          this.question = Question;
+
     }
     public class ChoiceItem {
         private String choice;

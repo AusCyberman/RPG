@@ -203,6 +203,7 @@ public class Creature {
        
        }}
    //Get ability Modifier based on ability 
+  //TRUNCATED
    public int getAbilityModifier(int Ability) {
 	   switch(Ability) {
 	   case 1:
