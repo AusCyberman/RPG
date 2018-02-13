@@ -15,6 +15,7 @@ public class Player {
     public Player(Creature charc,String name) {
     	if(charc.canBePlayer==true) {
     		character= charc;
+    		character.isPlayer = true;
     	}else {
     		character.notPlayer(); 
     	}

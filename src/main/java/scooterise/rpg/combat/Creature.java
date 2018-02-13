@@ -4,12 +4,31 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**Make sure to configure
+ *Abilities with
+ *abilities.put("Strength", _STRENGTH_SCORE_);
+ *abilities.put("Dexterity", _DEXTERITY_SCORE_);
+ *abilities.put("Wisdom", _WISDOM_SCORE_);
+ *abilities.put("Perception", _PERCEPTION_SCORE_);
+ *abilities.put("Charisma", _CHARISMA_SCORE_);
+
+
+ */
 public class Creature {
+    public void setStrength(Integer _STRENGTH_SCORE_){
+        abilities.put("Strength", _STRENGTH_SCORE_);
+    }
+    public void setDexterity(Integer _DEXTERITY_SCORE_){
+        abilities.put("Dexterity", _DEXTERITY_SCORE_);
+    }
+    public void setWisdom(Integer _WISDOM_SCORE_){
+        abilities.put("Strength", _WISDOM_SCORE_);
+    }
 	public class Dice{
-		
-		
-		
-		
+
+
+
+
 		public Integer attackRoll(String diceString,Integer abilityscore){
 			char[] string = diceString.toCharArray();
 			Integer DiceCount = 1;
@@ -164,7 +183,11 @@ public class Creature {
    public String CreatureName ="undefined";
    public boolean isPlayer = false;
    public boolean canBePlayer = false;
-   
+   Integer armorclass = 12;
+
+   public void setArmorclass(){
+
+   }
    HashMap<String,Integer> abilities = new HashMap<String,Integer>();
    public Creature(){
 	   abilities.put("Strength", 10);
