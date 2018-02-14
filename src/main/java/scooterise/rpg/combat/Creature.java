@@ -1,18 +1,18 @@
 package scooterise.rpg.combat;
 
+import scooterise.rpg.story.Player;
+
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**Make sure to configure
  *Abilities with
- *abilities.put("Strength", _STRENGTH_SCORE_);
- *abilities.put("Dexterity", _DEXTERITY_SCORE_);
- *abilities.put("Wisdom", _WISDOM_SCORE_);
- *abilities.put("Perception", _PERCEPTION_SCORE_);
- *abilities.put("Charisma", _CHARISMA_SCORE_);
-
-
+ *setStrength( _STRENGTH_SCORE_);
+ *setDexterity( _DEXTERITY_SCORE_);
+ *setWisdom( _WISDOM_SCORE_);
+ *sePerception( _PERCEPTION_SCORE_);
+ *setCharisma( _CHARISMA_SCORE_);
  */
 public class Creature {
     public void setStrength(Integer _STRENGTH_SCORE_){
@@ -22,14 +22,57 @@ public class Creature {
         abilities.put("Dexterity", _DEXTERITY_SCORE_);
     }
     public void setWisdom(Integer _WISDOM_SCORE_){
-        abilities.put("Strength", _WISDOM_SCORE_);
+        abilities.put("Wisdom", _WISDOM_SCORE_);
     }
-	public class Dice{
+    public void setPerception(Integer _PERCEPTION_SCORE_){
+        abilities.put("Perception", _PERCEPTION_SCORE_);
+    }
+    public void setCharisma(Integer _CHARISMA_SCORE_){
+        abilities.put("Charisma", _CHARISMA_SCORE_);
+    }
+
+
+    public Integer getStrength(){
+        return abilities.get("Strength");
+    }
+    public Integer getDexterity(){
+        return abilities.get("Dexterity");
+    }
+    public Integer getWisdom(){
+        return abilities.get("Wisdom");
+    }
+    public Integer getPerception(){
+        return abilities.get("Perception");
+    }
+    public Integer getCharisma(){
+        return abilities.get("Charisma");
+    }
+
+
+
+    public Creature attack(Creature creature,Weapon weapon){
+        Integer modifier;
+        if ( weapon.weapontype == 0){
+            modifier = creature.getAbilityModifier(creature.getStrength());
+        }else{
+            modifier = creature.getAbilityModifier(creature.getDexterity());
+        }
+    if(weapon.getAttackDamage()>=creature.armorclass+modifier){
+            creature.currenthp =
+        }
+
+    return creature;
+    }
+
+
+
+	public static class Dice{
 
 
 
 
-		public Integer attackRoll(String diceString,Integer abilityscore){
+		public Integer attackRoll(String diceString){
+            Integer diceanswer=0;
 			char[] string = diceString.toCharArray();
 			Integer DiceCount = 1;
 			Boolean multiplierfin = false;
@@ -106,7 +149,7 @@ public class Creature {
 							modifer=(int) string[i];
 							
 							if(i==string.length) {
-								Integer diceanswer=0;
+
 								for(int c=0;c<=DiceCount;c++) {
 								diceanswer = diceanswer+ThreadLocalRandom.current().nextInt(1, dice + 1);
 								}
@@ -122,7 +165,11 @@ public class Creature {
 								
 							}
 						}else {
-							modifer=modifer*10+(int) string[i];
+						    if(i==string.length){
+						        diceanswer = DiceCount*ThreadLocalRandom.current().nextInt(1, dice + 1);
+                            }else {
+                                modifer = modifer * 10 + (int) string[i];
+                            }
 						}
 					}
 					}
@@ -150,7 +197,7 @@ public class Creature {
 								modifer=(int) string[i];
 								
 								if(i==string.length) {
-									Integer diceanswer=0;
+
 									for(int c=0;c<=DiceCount;c++) {
 									diceanswer = diceanswer+ThreadLocalRandom.current().nextInt(1, dice + 1);
 									}
@@ -175,18 +222,19 @@ public class Creature {
 				}
 				
 			}
-			getAbilityModifier(abilityscore);
-			return 0;
+
+			return diceanswer;
 		}
 	}
    public int maxhp = 15;
+    public int currenthp = maxhp;
    public String CreatureName ="undefined";
    public boolean isPlayer = false;
    public boolean canBePlayer = false;
    Integer armorclass = 12;
 
    public void setArmorclass(){
-
+    armorclass = getAbilityModifier(getStrength())+10;
    }
    HashMap<String,Integer> abilities = new HashMap<String,Integer>();
    public Creature(){
