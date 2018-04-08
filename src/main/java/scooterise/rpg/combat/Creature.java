@@ -1,6 +1,7 @@
 package scooterise.rpg.combat;
 
-import scooterise.rpg.story.Player;
+import scooterise.rpg.combat.weapons.Weapon;
+import scooterise.rpg.combat.weapons.WeaponType;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -15,6 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *setCharisma( _CHARISMA_SCORE_);
  */
 public class Creature {
+
     public void setStrength(Integer _STRENGTH_SCORE_){
         abilities.put("Strength", _STRENGTH_SCORE_);
     }
@@ -47,23 +49,39 @@ public class Creature {
     public Integer getCharisma(){
         return abilities.get("Charisma");
     }
+public void addWeapon(Weapon weapon) throws FullBag {
+    if (items.length + 2 == getStrength()) {
+        throw new FullBag(getStrength());
+    } else {
+        weapons[weapons.length] = weapon;
+        items[items.length] = weapon;
 
+    }
+}
 
+public class FullBag extends Exception{
 
-    public Creature attack(Creature creature,Weapon weapon){
-        Integer modifier;
-        if ( weapon.weapontype == 0){
-            modifier = creature.getAbilityModifier(creature.getStrength());
-        }else{
-            modifier = creature.getAbilityModifier(creature.getDexterity());
+        public FullBag(Integer propersize){
+            super("You have added 1 more item than can be carried by this creature. This Creatures limit is its Strength. Strength: "+propersize);
         }
-    if(weapon.getAttackDamage()>=creature.armorclass+modifier){
-            creature.currenthp =
-        }
+}
 
-    return creature;
+
+    public Weapon getWeapon(Integer weaponID) {
+
+        return weapons[weaponID];
     }
 
+    public void awardxp(Creature enemy){
+
+    }
+    public void setDiffuculty(Integer difficultyLevel){
+        xp = difficultyLevel*getStrength()/getDexterity();
+    }
+
+
+
+public Integer xp =0;
 
 
 	public static class Dice{
@@ -213,7 +231,12 @@ public class Creature {
 									
 								}
 							}else {
-								modifer=modifer*10+(int) string[i];
+
+                                if(i==string.length){
+                                    diceanswer = DiceCount*ThreadLocalRandom.current().nextInt(1, dice + 1);
+                                }else {
+                                    modifer = modifer * 10 + (int) string[i];
+                                }
 							}
 						}
 						}	
@@ -226,12 +249,29 @@ public class Creature {
 			return diceanswer;
 		}
 	}
+	public String CreatureType = "undefined";
    public int maxhp = 15;
     public int currenthp = maxhp;
    public String CreatureName ="undefined";
    public boolean isPlayer = false;
    public boolean canBePlayer = false;
    Integer armorclass = 12;
+   Item[] items = {};
+   Weapon[] weapons = {};
+
+
+public class Fist extends Weapon{
+    public Fist(){
+        setWeaponName("Fist");
+        setWeaponType(WeaponType.MELEE);
+    }
+}
+
+
+
+
+
+
 
    public void setArmorclass(){
     armorclass = getAbilityModifier(getStrength())+10;
@@ -243,8 +283,13 @@ public class Creature {
 	   abilities.put("Wisdom", 10);
 	   abilities.put("Perception", 10);
 	   abilities.put("Charisma", 10);
-	   
-	   
+       try {
+           addWeapon(new Fist());
+       } catch (FullBag fullBag) {
+           fullBag.printStackTrace();
+       }
+
+
    }
    public void notPlayer() {
 	   try {

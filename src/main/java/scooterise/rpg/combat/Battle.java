@@ -1,29 +1,116 @@
 package scooterise.rpg.combat;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
-import scooterise.rpg.combat.Creature;
+import scooterise.rpg.combat.weapons.Weapon;
+import scooterise.rpg.combat.weapons.WeaponType;
 import scooterise.rpg.story.StoryItem;
 import scooterise.rpg.story.Player;
 
 public class Battle extends StoryItem {
-public void dexcheck(int dexcheck,Creature creature ) {
-	if(participants.get(dexcheck) != null){
-		participants.put(dexcheck, creature);
+	private Creature[] participants = {};
+	private HashMap<Integer,Creature> playerz = new HashMap<Integer,Creature>();
+
+
+
+	public String combat(Integer player, Integer weaponID, Creature creature, Integer distanceAway) throws Dead {
+		WeaponType expectedweapontype;
+		Weapon playerweapon = participants[player].getWeapon(weaponID);
+			if(distanceAway>2){
+				expectedweapontype = WeaponType.RANGED;
+			}else{
+				expectedweapontype =WeaponType.MELEE;
+			}
+			Integer modifier;
+			if ( playerweapon.weaponType == WeaponType.MELEE){
+				modifier = creature.getAbilityModifier(creature.getStrength());
+			}else{
+				modifier = creature.getAbilityModifier(creature.getDexterity());
+			}
+			if(new Creature.Dice().attackRoll("1d20")>=creature.armorclass+modifier&&playerweapon.weaponType==expectedweapontype){
+				creature.currenthp = creature.currenthp - playerweapon.getAttackDamage();
+				if(creature.currenthp==0) {
+					throw new Dead("The "+creature.CreatureType+" has died",creature);
+
+				}
+
+			}
+
+
+
+	}
+	public String combat(Integer playerID, Integer creatureID,Integer distanceAway){
+
+        WeaponType expectedweapontype;
+        if(distanceAway>2){
+            expectedweapontype = WeaponType.RANGED;
+        }else{
+            expectedweapontype =WeaponType.MELEE;
+        }
+
+        Creature player = participants[playerID];
+        Creature creature = participants[creatureID];
+        Weapon weapon = creature.getWeapon(0);
+        for(int i=0;i<creature.weapons.length;i++){
+            if(creature.weapons[i].weaponType==expectedweapontype){
+                i=creature.weapons.length;
+                weapon = creature.weapons[i];
+            }
+        }
+
+		Integer modifier;
+		if ( weapon.weaponType == WeaponType.MELEE){
+			modifier = player.getAbilityModifier(player.getStrength());
+		}else{
+			modifier = player.getAbilityModifier(player.getDexterity());
+		}
+		if(new Creature.Dice().attackRoll("1d20")>=player.armorclass+modifier){
+			player.currenthp = player.currenthp - weapon.getAttackDamage();
+			return creature.CreatureType +" has used "+weapon.getWeaponName()+" on "+player.CreatureName;
+			if(player.currenthp==0){
+
+			}
+
+		}
+
+
+
+	}
+
+
+public void dexcheck(int dex,Creature creature ) {
+	if(participants[dex] != null){
+		participants[dex]= creature;
 		if(creature.isPlayer==true){
-		    playerz.put(dexcheck,creature);
+		    playerz.put(dex,creature);
         }
 	}else {
-		dexcheck(dexcheck,creature);
+		dexcheck(dex,creature);
 	}
 }
-	HashMap<Integer,Creature> participants = new HashMap<Integer,Creature>();
-    HashMap<Integer,Creature> playerz = new HashMap<Integer,Creature>();
+
 public void addEnemy(Creature creature) {
 	int dexcheck = creature.abilitycheck("Dexterity");
 
 
+}
+public Integer findCreature(Creature creature){
+		for(int i=0;i<participants.length;i++){
+			if(participants[i]!=null){
+				partici[i]=participants[i];
+			}
+		}
+	Integer[] partici = {};
+	Integer highest = partici[partici.length-1];
+	for(int i =highest;i<highest;i--){
+		if(participants.get(i) !=null){
+			if(participants.get(i) == creature) {
+			return i;
+			}
+		}
+
+	}
+	return null;
 }
 public Battle(Player[] Creature,Creature... creatures){
 
@@ -38,12 +125,21 @@ for(int i=0;players.size()>i;i++){
     dexcheck(players.get(playes[i]).character.abilitycheck("Dexterity"),players.get(playes[i]).character);
 
 }
-    Integer[] partici = (Integer[]) participants.keySet().toArray();
+Integer[] partici = {};
+Integer keyset =0;
+	for(int i=0;i<participants.length;i++){
+		if(participants[i]!=null){
+
+			partici[keyset]=i;
+			keyset++;
+		}
+	}
+
     Integer highest = partici[partici.length-1];
 
 for(int i =highest;i<highest;i--){
-if(participants.get(i) !=null){
-    if(participants.get(i).isPlayer==false){
+if(participants[i] !=null){
+    if(participants[i].isPlayer==false){
 
     }else{
 
@@ -54,5 +150,18 @@ if(participants.get(i) !=null){
 
 }
 }
+	public class Dead extends Exception{
+		public Dead(String pretxt,Creature creature){
+			super(pretxt);
+
+			if(!creature.isPlayer){
+			participants[findCreature(creature)]=null;
+
+			}
+
+		}
+
+
+	}
 
 }
