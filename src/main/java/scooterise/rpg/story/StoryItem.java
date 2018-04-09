@@ -27,6 +27,10 @@ public class StoryItem{
         proceeding = item;
 
     }
+    public interface Story{
+        public void start();
+
+    }
     
     
 }

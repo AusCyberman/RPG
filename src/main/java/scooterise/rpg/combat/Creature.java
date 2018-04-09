@@ -16,6 +16,8 @@ import java.util.concurrent.ThreadLocalRandom;
  *setCharisma( _CHARISMA_SCORE_);
  */
 public class Creature {
+	public Weapon currentweapon;
+
 
     public void setStrength(Integer _STRENGTH_SCORE_){
         abilities.put("Strength", _STRENGTH_SCORE_);
@@ -291,6 +293,7 @@ public class Fist extends Weapon{
 
 
    }
+
    public void notPlayer() {
 	   try {
 		throw new InvalidCharacter("Player Creature cannot be player, Please choose another creature");

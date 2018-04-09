@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 public class StartingStory extends StoryItem{
 
+
 public StartingStory(String name,StoryItem proceedingstory,Player... nplayers){
     setProcedingStoryItem(proceedingstory);
 
