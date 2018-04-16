@@ -36,6 +36,12 @@ public class Creature {
     }
 
 
+
+
+
+
+
+
     public Integer getStrength(){
         return abilities.get("Strength");
     }

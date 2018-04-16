@@ -14,6 +14,11 @@ public class Battle extends StoryItem implements StoryItem.Story {
 	Integer combatdistance;
 	Integer currentcreature;
 
+
+
+
+
+
 	public String combat(Integer playerID, Integer weaponID, Integer creatureID, Integer distanceAway){
 		if(currentcreature==playerID) {
 			WeaponType expectedweapontype;
@@ -57,6 +62,13 @@ public class Battle extends StoryItem implements StoryItem.Story {
 		return "It is not "+players.get(playerID).character.CreatureName+"'s turn";
 
 	}
+
+
+
+
+
+
+
 	public String combat(Integer playerID, Integer creatureID,Integer distanceAway){
 		if(creatureID==currentcreature) {
 			combatdistance = distanceAway;
@@ -188,31 +200,56 @@ if(participants[i] !=null){
 
 }
 }
+public boolean checkIfAllPlayers(){
+	boolean answer = false;
+	boolean validplayers =false;
+	for(int i =0;i<participants.length;i++){
+		if(participants[i] !=null){
+			validplayers=true;
+			if(!participants[i].isPlayer){
+				answer=true;
+			}
+		}
+	}
+
+		return answer;
+
+}
 
     @Override
     public void start() {
         Integer highest = partici[partici.length-1];
-        for (int i=0;i<participants.length;i++){
-        	if(participants !=null){
-        if (!participants[i].isPlayer){
+        attackSequence();
 
-
-            Random rand = new Random();
-
-            int  n = rand.nextInt(50) + 1;
-
-            combat(rand.nextInt(playerz.size()) + 1,i,combatdistance);
-        }else{
-			Random rand = new Random();
-
-			int  n = rand.nextInt(50) + 1;
-
-
-		}
-		}}
     }
-public void setweapon(Integer playerID,Weapon weapon){
-	players.get(playerID);
+    public void attackSequence(){
+		for (int i=0;i<participants.length;i++){
+			if(participants !=null){
+				if (!participants[i].isPlayer){
+
+
+					Random rand = new Random();
+
+					int  n = rand.nextInt(50) + 1;
+
+					combat(rand.nextInt(playerz.size()) + 1,i,combatdistance);
+				}else{
+					Random rand = new Random();
+
+					int  n = rand.nextInt(50) + 1;
+
+
+				}
+			}}
+			if(!checkIfAllPlayers()) {
+				attackSequence();
+			}
+	}
+
+
+
+	public void setweapon(Integer playerID, Weapon weapon){
+	Creature player = players.get(playerID).character;
 }
 
     public class Dead extends Exception{
