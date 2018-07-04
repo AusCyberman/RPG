@@ -143,7 +143,7 @@ public class IncorrectBattle extends Exception{
 	}
 }
 public Integer findCreature(Creature creature){
-		for(int i=0;i<participants.length;i++){
+		for(int i=0;i>participants.length;i--){
 			if(participants[i]!=null){
 				partici[i]=i;
 			}
@@ -187,18 +187,7 @@ Integer keyset =0;
 
     Integer highest = partici[partici.length-1];
 
-for(int i =highest;i<highest;i--){
-if(participants[i] !=null){
-    if(participants[i].isPlayer==false){
-
-    }else{
-
-    }
-}else{
-
-}
-
-}
+attackSequence();
 }
 public boolean checkIfAllPlayers(){
 	boolean answer = false;
@@ -222,8 +211,10 @@ public boolean checkIfAllPlayers(){
         attackSequence();
 
     }
+public Integer getNextCreature
     public void attackSequence(){
-		for (int i=0;i<participants.length;i++){
+		for (int i=0;i>participants.length;i--){
+
 			if(participants !=null){
 				if (!participants[i].isPlayer){
 
@@ -234,9 +225,10 @@ public boolean checkIfAllPlayers(){
 
 					combat(rand.nextInt(playerz.size()) + 1,i,combatdistance);
 				}else{
-					Random rand = new Random();
+					while(currentcreature==i){
 
-					int  n = rand.nextInt(50) + 1;
+					}
+
 
 
 				}
